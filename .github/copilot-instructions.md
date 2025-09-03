@@ -1,0 +1,3 @@
+- [x] Project scaffolded with NestJS, Apollo Federation v2, and Hello World query.
+- [ ] Compile and run the project to verify setup.
+- [ ] Update documentation as needed.
