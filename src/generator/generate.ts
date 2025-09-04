@@ -3,6 +3,7 @@ import * as os from 'os';
 import allianceConfig from 'src/alliance/alliance.config';
 import characterConfig from 'src/character/character.config';
 import corporationConfig from 'src/corporation/corporation.config';
+import groupConfig from 'src/group/group.config';
 
 fs.rmSync(`${process.cwd()}/.gitignore`, { force: true });
 
@@ -11,6 +12,7 @@ const generated: string[] = [];
 allianceConfig.generators.forEach((generator) => generated.push(generator(allianceConfig)));
 corporationConfig.generators.forEach((generator) => generated.push(generator(corporationConfig)));
 characterConfig.generators.forEach((generator) => generated.push(generator(characterConfig)));
+groupConfig.generators.forEach((generator) => generated.push(generator(groupConfig)));
 
 if (process.argv.slice(2)[0] === '-r') {
   generated.forEach((filePath) => fs.rmSync(`${process.cwd()}/${filePath}`, { force: true }));

@@ -1,6 +1,6 @@
 import { GeneratorFunction } from './generator';
 
-export type EsiResponseFieldType = 'boolean' | 'number' | 'string';
+export type EsiResponseFieldType = 'boolean' | 'number' | 'number[]' | 'string';
 
 export type EsiResponseField =
   | {

@@ -9,6 +9,6 @@ export class TypeGroupResolver {
 
   @ResolveField(() => [TypeType])
   types(@Parent() group: GroupType): Promise<TypeType[]> {
-    return this.typeLoader.loadMany(group.typeIds).then((r) => r as TypeType[]);
+    return this.typeLoader.loadMany(group.types).then((r) => r as TypeType[]);
   }
 }
