@@ -1,23 +1,14 @@
-# NestJS Apollo Federation Example
+# Eve GQL ESI
 
-This is a skeleton NestJS project using Apollo Federation v2. It exposes a simple federated GraphQL query:
+This project is the first in an attempt to create a public supergraph of Eve Online APIs.
 
-```
-query {
-  hello
-}
-```
+Here we add GraphQL on top of ESI - nothing more, nothing less.
 
-which returns `"Hello World"`.
+# Quickstart
 
-## Getting Started
+These steps probably aren't enough.
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Run the server:
-   ```bash
-   npm run start
-   ```
-3. Visit http://localhost:3000/graphql to use the playground.
+1. Clone the repo
+2. `npm install`
+3. `npm run generate`
+4. `npm start`
