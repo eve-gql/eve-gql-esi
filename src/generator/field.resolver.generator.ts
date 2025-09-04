@@ -7,7 +7,12 @@ const fieldResolverTemplate = (typeName: string, fieldName: string, field: EsiRe
   const fieldType = typeof field === 'string' ? field : field.type;
   const required = typeof field === 'string' ? true : field.required;
 
-  return `    @ResolveField(() => ${fieldTypeToGraphqlType[fieldType]}${required ? '' : ', { nullable: true }'})
+  return `    @ResolveField(() => ${fieldTypeToGraphqlType[fieldType]}${required ? '' : ', { nullable: true }'})${
+    fieldName.endsWith('_id')
+      ? `
+    @Directive('@inaccessible')`
+      : ''
+  }
     async ${fieldName}(@Parent() parent: ${typeName}Type) {
       return this.getField<${fieldType}>(parent, '${fieldName}');
     }`;
@@ -18,7 +23,7 @@ export const generateFieldResolver: GeneratorFunction = ({
   key,
   esiResponse,
 }: GeneratorConfig) => {
-  const template = `import { Resolver, ResolveField, Parent } from '@nestjs/graphql';
+  const template = `import { Directive, Resolver, ResolveField, Parent } from '@nestjs/graphql';
 import { FieldResolver } from 'src/graphql/field-resolver';
 import { ${singular}Type } from './${singular.toLowerCase()}.type';
 import { ${singular}Loader } from './${singular.toLowerCase()}.loader';

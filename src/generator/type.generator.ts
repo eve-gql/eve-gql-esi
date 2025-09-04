@@ -7,7 +7,12 @@ const fieldTemplate = (fieldName: string, field: EsiResponseField) => {
   const fieldType = typeof field === 'string' ? field : field.type;
   const required = typeof field === 'string' ? true : field.required;
 
-  return `  @Field(() => ${fieldTypeToGraphqlType[fieldType]}${required ? '' : ', { nullable: true }'})
+  return `  @Field(() => ${fieldTypeToGraphqlType[fieldType]}${required ? '' : ', { nullable: true }'})${
+    fieldName.endsWith('_id')
+      ? `
+  @Directive('@inaccessible')`
+      : ''
+  }
   ${fieldName}${required ? '' : '?'}: ${fieldType};`;
 };
 
@@ -16,7 +21,7 @@ export const generateType: GeneratorFunction = ({
   key,
   esiResponse,
 }: GeneratorConfig) => {
-  const template = `import { ObjectType, Field, ID } from '@nestjs/graphql';
+  const template = `import { Directive, ObjectType, Field, ID } from '@nestjs/graphql';
   
 @ObjectType('${singular}')
 export class ${singular}Type {
