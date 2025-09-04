@@ -9,6 +9,6 @@ export class ContactCorporationResolver {
 
   @ResolveField(() => [Contact])
   async getContacts(@Parent() corporation: Corporation): Promise<Contact[]> {
-    return this.contactService.findByCorporationId(corporation.corporation_id);
+    return this.contactService.findByCorporationId(corporation.id);
   }
 }

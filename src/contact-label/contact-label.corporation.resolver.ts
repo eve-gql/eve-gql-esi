@@ -9,6 +9,6 @@ export class ContactLabelCorporationResolver {
 
   @ResolveField(() => [ContactLabel])
   async getContactLabels(@Parent() corporation: Corporation): Promise<ContactLabel[]> {
-    return this.contactLabelService.findByCorporationId(corporation.corporation_id);
+    return this.contactLabelService.findByCorporationId(corporation.id);
   }
 }

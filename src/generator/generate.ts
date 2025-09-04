@@ -1,14 +1,14 @@
 import * as fs from 'fs';
 import * as os from 'os';
 import allianceConfig from 'src/alliance/alliance.config';
+import corporationConfig from 'src/corporation/corporation.config';
 
 fs.rmSync(`${process.cwd()}/.gitignore`, { force: true });
 
 const generated: string[] = [];
 
 allianceConfig.generators.forEach((generator) => generated.push(generator(allianceConfig)));
-
-console.log(process.argv);
+corporationConfig.generators.forEach((generator) => generated.push(generator(corporationConfig)));
 
 if (process.argv.slice(2)[0] === '-r') {
   generated.forEach((filePath) => fs.rmSync(`${process.cwd()}/${filePath}`, { force: true }));

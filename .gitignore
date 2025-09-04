@@ -31,3 +31,9 @@ src/alliance/alliance.loader.ts
 src/alliance/alliance.type.ts
 src/alliance/alliance.resolver.ts
 src/alliance/alliance.field.resolver.ts
+src/corporation/corporation.entity.ts
+src/corporation/corporation.service.ts
+src/corporation/corporation.loader.ts
+src/corporation/corporation.type.ts
+src/corporation/corporation.resolver.ts
+src/corporation/corporation.field.resolver.ts
