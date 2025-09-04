@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "generate": "npx tsx ./src/generator/generate",
+    "generate:remove": "npx tsx ./src/generator/generate -r",
     "test": "jest",
     "dev": "nest start --watch",
     "start": "nest start",

@@ -25,9 +25,3 @@ lerna-debug.log*
 
 # Generated
 schema.gql
-src/alliance/alliance.entity.ts
-src/alliance/alliance.service.ts
-src/alliance/alliance.loader.ts
-src/alliance/alliance.type.ts
-src/alliance/alliance.resolver.ts
-src/alliance/alliance.field.resolver.ts

@@ -1,0 +1,18 @@
+import * as fs from 'fs';
+import * as os from 'os';
+import allianceConfig from 'src/alliance/alliance.config';
+
+fs.rmSync(`${process.cwd()}/.gitignore`, { force: true });
+
+const generated: string[] = [];
+
+allianceConfig.generators.forEach((generator) => generated.push(generator(allianceConfig)));
+
+console.log(process.argv);
+
+if (process.argv.slice(2)[0] === '-r') {
+  generated.forEach((filePath) => fs.rmSync(`${process.cwd()}/${filePath}`, { force: true }));
+}
+
+fs.copyFileSync(`${process.cwd()}/.gitignore.template`, `${process.cwd()}/.gitignore`);
+fs.appendFileSync(`${process.cwd()}/.gitignore`, generated.join(os.EOL));

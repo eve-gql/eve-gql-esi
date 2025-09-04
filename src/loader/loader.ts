@@ -5,9 +5,9 @@ import { Service } from 'src/service/service';
 export abstract class Loader<K, V extends Entity<K>> {
   private loader: DataLoader<K, V>;
 
-  constructor(private readonly service: Service<K, V>) {
+  constructor(private readonly s: Service<K, V>) {
     this.loader = new DataLoader(async (ids: readonly K[]) => {
-      const types = await Promise.all(ids.map((id) => this.service.findOne(id)));
+      const types = await Promise.all(ids.map((id) => this.s.findOne(id)));
       const typeMap = new Map(types.filter(Boolean).map((type) => [type!.id, type]));
       return ids.map((id) => typeMap.get(id));
     });

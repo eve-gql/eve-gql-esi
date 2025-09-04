@@ -1,7 +1,10 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 
 @ObjectType()
 export class Faction {
+  @Field(() => ID)
+  id: number;
+
   @Field(() => Int)
   faction_id: number;
 
