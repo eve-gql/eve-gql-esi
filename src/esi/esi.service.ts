@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 import { setupCache } from 'axios-cache-interceptor';
 import { Alliance } from 'src/alliance/alliance.entity';
+import { Character } from 'src/character/character.entity';
 import { Corporation } from 'src/corporation/corporation.entity';
 import { Group } from 'src/group/group.entity';
 import { Type } from 'src/type/type.entity';
@@ -28,6 +29,9 @@ export class EsiService {
 
   public corporations = () => this.fetch<number[]>('corporations');
   public corporation = (id: number) => this.fetch<Corporation>(`corporations/${id}`);
+
+  public characters = () => Promise.resolve([]);
+  public character = (id: number) => this.fetch<Character>(`characters/${id}`);
 
   public groups = () => this.fetch<number[]>('universe/groups');
   public group = (id: number): Promise<Group> => this.fetch<Group>(`universe/groups/${id}`);

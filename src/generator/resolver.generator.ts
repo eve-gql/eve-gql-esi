@@ -1,7 +1,7 @@
 import { generate, GeneratorFunction } from './generator';
 import { GeneratorConfig } from './generator.config';
 
-export const generateResolver: GeneratorFunction = ({ singular, key }: GeneratorConfig) => {
+export const generateResolver: GeneratorFunction = ({ singular, plural, key }: GeneratorConfig) => {
   const template = `import { Resolver, Query, Args, ResolveReference, ID } from '@nestjs/graphql';
 import { ${singular}Loader } from './${singular.toLowerCase()}.loader';
 import { ${singular}Service } from './${singular.toLowerCase()}.service';
@@ -15,7 +15,7 @@ export class ${singular}Resolver {
   ) {}
 
   @Query(() => [${singular}Type])
-  ${singular.toLowerCase()}s() {
+  ${(plural || `${singular}s`).toLowerCase()}() {
     return this.service.findAll().then((ids) =>
       ids.map((id) => ({
         id,

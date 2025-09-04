@@ -9,6 +9,7 @@ import { ContactModule } from './contact/contact.module';
 import { EsiModule } from './esi/esi.module';
 import { GroupModule } from './group/group.module';
 import { TypeModule } from './type/type.module';
+import { CharacterModule } from './character/character.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { TypeModule } from './type/type.module';
     FactionModule,
     GroupModule,
     TypeModule,
+    CharacterModule,
   ],
 })
 export class AppModule {}
