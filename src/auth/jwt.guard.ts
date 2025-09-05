@@ -10,7 +10,6 @@ const allowedCharacterIds = [
 export class JwtGuard extends AuthGuard('jwt') {
   getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
-    console.log('GETTING THE FUCKING REUQEST YOU FUCK');
     return ctx.getContext().req;
   }
 
