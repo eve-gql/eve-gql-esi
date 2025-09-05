@@ -10,6 +10,7 @@ import { EsiModule } from './esi/esi.module';
 import { GroupModule } from './group/group.module';
 import { TypeModule } from './type/type.module';
 import { CharacterModule } from './character/character.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CharacterModule } from './character/character.module';
       driver: ApolloFederationDriver,
       autoSchemaFile: { path: 'schema.gql', federation: 2 },
     }),
+    AuthModule,
     EsiModule,
     AllianceModule,
     AllianceIconModule,
