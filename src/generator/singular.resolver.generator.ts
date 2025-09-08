@@ -1,5 +1,6 @@
 import { generate, GeneratorFunction } from './generator';
 import upperFirst from 'lodash.upperfirst';
+import kebabCase from 'lodash.kebabcase';
 
 export const generateSingularResolver: GeneratorFunction = ({ singular }) => {
   return singular.on.map(({ on, as, from }) => {
@@ -27,7 +28,7 @@ export class ${on}${upperFirst(as)}Resolver extends FieldResolver<${on}Type> {
 `;
     return generate({
       forEntity: singular.name,
-      fileName: `${on.toLowerCase()}.${as}`,
+      fileName: `${on.toLowerCase()}.${kebabCase(as)}`,
       fileType: 'resolver',
       template,
     });

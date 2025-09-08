@@ -1,5 +1,6 @@
 import { generate, GeneratorFunction } from './generator';
 import startCase from 'lodash.startcase';
+import kebabCase from 'lodash.kebabcase';
 
 export const generatePluralResolver: GeneratorFunction = ({ singular, plural }) => {
   return plural.on.map(({ on, as, from }) => {
@@ -24,7 +25,7 @@ export class ${on}${startCase(as)}Resolver {
 `;
     return generate({
       forEntity: singular.name,
-      fileName: `${on.toLowerCase()}.${as}`,
+      fileName: `${on.toLowerCase()}.${kebabCase(as)}`,
       fileType: 'resolver',
       template,
     });
