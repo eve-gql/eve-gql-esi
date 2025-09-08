@@ -1,9 +1,24 @@
 import { generateAll } from 'src/generator/all.generator';
 import { GeneratorConfig } from 'src/generator/generator-config';
 import { generatePluralResolver } from 'src/generator/plural.resolver.generator';
+import { generateSingularResolver } from 'src/generator/singular.resolver.generator';
 
 export default {
-  singular: 'Corporation',
+  singular: {
+    name: 'Corporation',
+    on: [
+      {
+        on: 'Alliance',
+        from: 'creator_corporation_id',
+        as: 'creatorCorporation',
+      },
+      {
+        on: 'Alliance',
+        from: 'executor_corporation_id',
+        as: 'executorCorporation',
+      },
+    ],
+  },
   plural: {
     name: 'Corporations',
     on: ['Alliance'],
@@ -48,5 +63,5 @@ export default {
       required: false,
     },
   },
-  generators: [...generateAll, generatePluralResolver],
+  generators: [...generateAll, generateSingularResolver, generatePluralResolver],
 } as GeneratorConfig;

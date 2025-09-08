@@ -1,5 +1,5 @@
 import { generate, GeneratorFunction } from './generator';
-import startCase from 'lodash.startcase';
+import upperFirst from 'lodash.upperfirst';
 
 export const generateSingularResolver: GeneratorFunction = ({ singular }) => {
   return singular.on.map(({ on, as, from }) => {
@@ -11,7 +11,7 @@ import { ${singular.name}Loader } from './${singular.name.toLowerCase()}.loader'
 import { ${singular.name}Type } from './${singular.name.toLowerCase()}.type';
 
 @Resolver(() => ${on}Type)
-export class ${on}${startCase(as)}Resolver extends FieldResolver<${on}Type> {
+export class ${on}${upperFirst(as)}Resolver extends FieldResolver<${on}Type> {
   constructor(
     private readonly parentLoader: ${on}Loader,
     private readonly loader: ${singular.name}Loader,

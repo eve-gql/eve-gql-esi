@@ -8,6 +8,6 @@ import { EsiModule } from 'src/esi/esi.module';
 @Module({
   imports: [EsiModule],
   providers: [AllianceService, AllianceLoader, AllianceResolver, AllianceFieldResolver],
-  exports: [AllianceResolver, AllianceFieldResolver],
+  exports: [AllianceLoader, AllianceResolver, AllianceFieldResolver],
 })
 export class AllianceModule {}

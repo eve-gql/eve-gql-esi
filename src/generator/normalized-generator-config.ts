@@ -32,12 +32,12 @@ export const normalize = (config: GeneratorConfig): NormalizedGeneratorConfig =>
       typeof config.singular !== 'string'
         ? config.singular.on.map((on) => ({
             on: typeof on === 'string' ? on : on.on,
-            as: (typeof on === 'string'
-              ? typeof config.singular === 'string'
-                ? config.singular
-                : config.singular.name
-              : on.as
-            ).toLowerCase(),
+            as:
+              typeof on === 'string'
+                ? typeof config.singular === 'string'
+                  ? config.singular
+                  : config.singular.name
+                : on.as,
             from: typeof on === 'string' ? 'id' : on.from,
           }))
         : [],
@@ -52,14 +52,14 @@ export const normalize = (config: GeneratorConfig): NormalizedGeneratorConfig =>
       config.plural && typeof config.plural !== 'string'
         ? config.plural.on.map((on) => ({
             on: typeof on === 'string' ? on : on.on,
-            as: (typeof on === 'string'
-              ? config.plural
-                ? typeof config.plural === 'string'
-                  ? config.plural
-                  : config.plural.name
-                : `${typeof config.singular === 'string' ? config.singular : config.singular.name}s`
-              : on.as
-            ).toLowerCase(),
+            as:
+              typeof on === 'string'
+                ? config.plural
+                  ? typeof config.plural === 'string'
+                    ? config.plural
+                    : config.plural.name
+                  : `${typeof config.singular === 'string' ? config.singular : config.singular.name}s`
+                : on.as,
             from: typeof on === 'string' ? 'id' : on.from,
           }))
         : [],

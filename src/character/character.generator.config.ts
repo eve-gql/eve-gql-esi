@@ -7,6 +7,11 @@ export default {
     name: 'Character',
     on: [
       {
+        on: 'Alliance',
+        from: 'creator_id',
+        as: 'creator',
+      },
+      {
         on: 'Corporation',
         from: 'creator_id',
         as: 'creator',

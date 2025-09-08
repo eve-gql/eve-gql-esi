@@ -31,6 +31,7 @@ src/alliance/alliance.loader.ts
 src/alliance/alliance.resolver.ts
 src/alliance/alliance.service.ts
 src/alliance/alliance.type.ts
+src/character/alliance.creator.resolver.ts
 src/character/character.entity.ts
 src/character/character.field.resolver.ts
 src/character/character.loader.ts
@@ -40,6 +41,8 @@ src/character/character.type.ts
 src/character/corporation.ceo.resolver.ts
 src/character/corporation.creator.resolver.ts
 src/corporation/alliance.corporations.resolver.ts
+src/corporation/alliance.creatorcorporation.resolver.ts
+src/corporation/alliance.executorcorporation.resolver.ts
 src/corporation/corporation.entity.ts
 src/corporation/corporation.field.resolver.ts
 src/corporation/corporation.loader.ts
