@@ -37,6 +37,9 @@ src/character/character.loader.ts
 src/character/character.resolver.ts
 src/character/character.service.ts
 src/character/character.type.ts
+src/character/corporation.ceo.resolver.ts
+src/character/corporation.creator.resolver.ts
+src/corporation/alliance.corporations.resolver.ts
 src/corporation/corporation.entity.ts
 src/corporation/corporation.field.resolver.ts
 src/corporation/corporation.loader.ts

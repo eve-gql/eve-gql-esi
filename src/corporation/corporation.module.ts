@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CorporationResolver } from './corporation.resolver';
 import { CorporationService } from './corporation.service';
-import { CorporationAllianceResolver } from './corporation.alliance.resolver';
+import { AllianceCorporationsResolver } from './alliance.corporations.resolver';
 import { CorporationAllianceService } from './corporation.alliance.service';
 import { CorporationLoader } from './corporation.loader';
 import { CorporationFieldResolver } from './corporation.field.resolver';
@@ -15,8 +15,13 @@ import { EsiModule } from 'src/esi/esi.module';
     CorporationResolver,
     CorporationFieldResolver,
     CorporationAllianceService,
-    CorporationAllianceResolver,
+    AllianceCorporationsResolver,
   ],
-  exports: [CorporationResolver, CorporationFieldResolver, CorporationAllianceResolver],
+  exports: [
+    CorporationLoader,
+    CorporationResolver,
+    CorporationFieldResolver,
+    AllianceCorporationsResolver,
+  ],
 })
 export class CorporationModule {}

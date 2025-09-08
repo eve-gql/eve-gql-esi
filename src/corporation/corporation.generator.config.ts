@@ -1,9 +1,13 @@
 import { generateAll } from 'src/generator/all.generator';
-import { GeneratorConfig } from 'src/generator/generator.config';
+import { GeneratorConfig } from 'src/generator/generator-config';
+import { generatePluralResolver } from 'src/generator/plural.resolver.generator';
 
-export const corporationConfig: GeneratorConfig = {
+export default {
   singular: 'Corporation',
-  key: 'number',
+  plural: {
+    name: 'Corporations',
+    on: ['Alliance'],
+  },
   esiResponse: {
     alliance_id: {
       type: 'number',
@@ -44,7 +48,5 @@ export const corporationConfig: GeneratorConfig = {
       required: false,
     },
   },
-  generators: generateAll,
-};
-
-export default corporationConfig;
+  generators: [...generateAll, generatePluralResolver],
+} as GeneratorConfig;

@@ -1,19 +1,18 @@
 import { generate, GeneratorFunction } from './generator';
-import { GeneratorConfig } from './generator.config';
 
-export const generateLoader: GeneratorFunction = ({ singular, key }: GeneratorConfig) => {
+export const generateLoader: GeneratorFunction = ({ singular, key }) => {
   const template = `import { Injectable } from '@nestjs/common';
 import { Loader } from 'src/loader/loader';
-import { ${singular} } from './${singular.toLowerCase()}.entity';
-import { ${singular}Service } from './${singular.toLowerCase()}.service';
+import { ${singular.name} } from './${singular.name.toLowerCase()}.entity';
+import { ${singular.name}Service } from './${singular.name.toLowerCase()}.service';
 
 @Injectable()
-export class ${singular}Loader extends Loader<${key}, ${singular}> {
-  constructor(private readonly service: ${singular}Service) {
+export class ${singular.name}Loader extends Loader<${key}, ${singular.name}> {
+  constructor(private readonly service: ${singular.name}Service) {
     super(service);
   }
 }
 `;
 
-  return generate(singular, 'loader', template);
+  return generate({ forEntity: singular.name, fileType: 'loader', template });
 };

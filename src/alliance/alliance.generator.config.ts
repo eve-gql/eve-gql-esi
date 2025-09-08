@@ -1,9 +1,8 @@
 import { generateAll } from 'src/generator/all.generator';
-import { GeneratorConfig } from 'src/generator/generator.config';
+import { GeneratorConfig } from 'src/generator/generator-config';
 
 export default {
   singular: 'Alliance',
-  key: 'number',
   esiResponse: {
     creator_corporation_id: 'number',
     creator_id: 'number',

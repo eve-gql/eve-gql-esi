@@ -1,21 +1,20 @@
 import { generate, GeneratorFunction } from './generator';
-import { GeneratorConfig } from './generator.config';
 
-export const generateResolver: GeneratorFunction = ({ singular, plural, key }: GeneratorConfig) => {
+export const generateResolver: GeneratorFunction = ({ singular, plural, key }) => {
   const template = `import { Resolver, Query, Args, ResolveReference, ID } from '@nestjs/graphql';
-import { ${singular}Loader } from './${singular.toLowerCase()}.loader';
-import { ${singular}Service } from './${singular.toLowerCase()}.service';
-import { ${singular}Type } from './${singular.toLowerCase()}.type';
+import { ${singular.name}Loader } from './${singular.name.toLowerCase()}.loader';
+import { ${singular.name}Service } from './${singular.name.toLowerCase()}.service';
+import { ${singular.name}Type } from './${singular.name.toLowerCase()}.type';
 
-@Resolver(() => ${singular}Type)
-export class ${singular}Resolver {
+@Resolver(() => ${singular.name}Type)
+export class ${singular.name}Resolver {
   constructor(
-    private readonly service: ${singular}Service,
-    private readonly loader: ${singular}Loader
+    private readonly service: ${singular.name}Service,
+    private readonly loader: ${singular.name}Loader
   ) {}
 
-  @Query(() => [${singular}Type])
-  ${(plural || `${singular}s`).toLowerCase()}() {
+  @Query(() => [${singular.name}Type])
+  ${plural.name.toLowerCase()}() {
     return this.service.findAll().then((ids) =>
       ids.map((id) => ({
         id,
@@ -23,8 +22,8 @@ export class ${singular}Resolver {
     );
   }
 
-  @Query(() => ${singular}Type, { nullable: true })
-  ${singular.toLowerCase()}(@Args('id', { type: () => ID }) id: ${key}) {
+  @Query(() => ${singular.name}Type, { nullable: true })
+  ${singular.name.toLowerCase()}(@Args('id', { type: () => ID }) id: ${key}) {
     return this.loader.load(id);
   }
 
@@ -33,7 +32,7 @@ export class ${singular}Resolver {
     return this.loader.load(reference.id);
   }
 }
-  `;
+`;
 
-  return generate(singular, 'resolver', template);
+  return generate({ forEntity: singular.name, fileType: 'resolver', template });
 };

@@ -1,9 +1,8 @@
 import { generateAll } from 'src/generator/all.generator';
-import { GeneratorConfig } from 'src/generator/generator.config';
+import { GeneratorConfig } from 'src/generator/generator-config';
 
-export const groupConfig: GeneratorConfig = {
+export default {
   singular: 'Group',
-  key: 'number',
   esiResponse: {
     group_id: 'number',
     name: 'string',
@@ -12,6 +11,4 @@ export const groupConfig: GeneratorConfig = {
     types: 'number[]',
   },
   generators: generateAll,
-};
-
-export default groupConfig;
+} as GeneratorConfig;

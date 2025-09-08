@@ -1,7 +1,7 @@
 import * as os from 'os';
 import { generate, GeneratorFunction } from './generator';
-import { EsiResponseField, GeneratorConfig } from './generator.config';
-import { fieldTypeToGraphqlType } from './fieldTypeToGraphqlType';
+import { EsiResponseField } from './generator-config';
+import { fieldTypeToGraphqlType } from './field-type-to-graphql-type';
 
 const fieldResolverTemplate = (typeName: string, fieldName: string, field: EsiResponseField) => {
   const fieldType = typeof field === 'string' ? field : field.type;
@@ -18,29 +18,25 @@ const fieldResolverTemplate = (typeName: string, fieldName: string, field: EsiRe
     }`;
 };
 
-export const generateFieldResolver: GeneratorFunction = ({
-  singular,
-  key,
-  esiResponse,
-}: GeneratorConfig) => {
+export const generateFieldResolver: GeneratorFunction = ({ singular, key, esiResponse }) => {
   const template = `import { Directive, Resolver, ResolveField, Parent } from '@nestjs/graphql';
 import { FieldResolver } from 'src/graphql/field-resolver';
-import { ${singular}Type } from './${singular.toLowerCase()}.type';
-import { ${singular}Loader } from './${singular.toLowerCase()}.loader';
+import { ${singular.name}Type } from './${singular.name.toLowerCase()}.type';
+import { ${singular.name}Loader } from './${singular.name.toLowerCase()}.loader';
   
-  @Resolver(() => ${singular}Type)
-  export class ${singular}FieldResolver extends FieldResolver<${singular}Type> {
-    constructor(private readonly loader: ${singular}Loader) {
+  @Resolver(() => ${singular.name}Type)
+  export class ${singular.name}FieldResolver extends FieldResolver<${singular.name}Type> {
+    constructor(private readonly loader: ${singular.name}Loader) {
       super(loader);
     }
 
-${fieldResolverTemplate(singular, 'id', key)}
+${fieldResolverTemplate(singular.name, 'id', key)}
 
 ${Object.keys(esiResponse)
-  .map((field) => fieldResolverTemplate(singular, field, esiResponse[field]))
+  .map((field) => fieldResolverTemplate(singular.name, field, esiResponse[field]))
   .join(`${os.EOL}${os.EOL}`)}
 }
 `;
 
-  return generate(singular, 'field.resolver', template);
+  return generate({ forEntity: singular.name, fileType: 'field.resolver', template });
 };

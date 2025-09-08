@@ -1,9 +1,23 @@
 import { generateAll } from 'src/generator/all.generator';
-import { GeneratorConfig } from 'src/generator/generator.config';
+import { GeneratorConfig } from 'src/generator/generator-config';
+import { generateSingularResolver } from 'src/generator/singular.resolver.generator';
 
-export const characterConfig: GeneratorConfig = {
-  singular: 'Character',
-  key: 'number',
+export default {
+  singular: {
+    name: 'Character',
+    on: [
+      {
+        on: 'Corporation',
+        from: 'creator_id',
+        as: 'creator',
+      },
+      {
+        on: 'Corporation',
+        from: 'ceo_id',
+        as: 'ceo',
+      },
+    ],
+  },
   esiResponse: {
     alliance_id: {
       type: 'number',
@@ -32,7 +46,5 @@ export const characterConfig: GeneratorConfig = {
       required: false,
     },
   },
-  generators: generateAll,
-};
-
-export default characterConfig;
+  generators: [...generateAll, generateSingularResolver],
+} as GeneratorConfig;
