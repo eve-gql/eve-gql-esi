@@ -1,7 +1,7 @@
 import { generateAll } from 'src/generator/all.generator';
 import { GeneratorConfig } from 'src/generator/generator.config';
 
-export const allianceConfig: GeneratorConfig = {
+export default {
   singular: 'Alliance',
   key: 'number',
   esiResponse: {
@@ -20,6 +20,4 @@ export const allianceConfig: GeneratorConfig = {
     ticker: 'string',
   },
   generators: generateAll,
-};
-
-export default allianceConfig;
+} as GeneratorConfig;

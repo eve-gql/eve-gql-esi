@@ -1,22 +1,30 @@
 import * as fs from 'fs';
+import { glob } from 'glob';
 import * as os from 'os';
-import allianceConfig from 'src/alliance/alliance.config';
-import characterConfig from 'src/character/character.config';
-import corporationConfig from 'src/corporation/corporation.config';
-import groupConfig from 'src/group/group.config';
+import { GeneratorConfig } from './generator.config';
 
 fs.rmSync(`${process.cwd()}/.gitignore`, { force: true });
 
-const generated: string[] = [];
+glob('**/**/*.generator.config.ts')
+  .then((generatorConfigs) =>
+    Promise.all(generatorConfigs.map((generatorConfig) => import(generatorConfig)))
+  )
+  .then((generatorConfigs: { default: GeneratorConfig }[]) =>
+    generatorConfigs.map((generatorConfig) => generatorConfig.default)
+  )
+  .then((generatorConfigs: GeneratorConfig[]) =>
+    generatorConfigs.flatMap((generatorConfig: GeneratorConfig) =>
+      generatorConfig.generators.map((generatorFunction) => generatorFunction(generatorConfig))
+    )
+  )
+  .then((generatedFiles) => generatedFiles.sort((a, b) => a.localeCompare(b)))
+  .then((generatedFiles) => {
+    if (process.argv.slice(2)[0] === '-r') {
+      generatedFiles.forEach((filePath) =>
+        fs.rmSync(`${process.cwd()}/${filePath}`, { force: true })
+      );
+    }
 
-allianceConfig.generators.forEach((generator) => generated.push(generator(allianceConfig)));
-corporationConfig.generators.forEach((generator) => generated.push(generator(corporationConfig)));
-characterConfig.generators.forEach((generator) => generated.push(generator(characterConfig)));
-groupConfig.generators.forEach((generator) => generated.push(generator(groupConfig)));
-
-if (process.argv.slice(2)[0] === '-r') {
-  generated.forEach((filePath) => fs.rmSync(`${process.cwd()}/${filePath}`, { force: true }));
-}
-
-fs.copyFileSync(`${process.cwd()}/.gitignore.template`, `${process.cwd()}/.gitignore`);
-fs.appendFileSync(`${process.cwd()}/.gitignore`, generated.join(os.EOL));
+    fs.copyFileSync(`${process.cwd()}/.gitignore.template`, `${process.cwd()}/.gitignore`);
+    fs.appendFileSync(`${process.cwd()}/.gitignore`, generatedFiles.join(os.EOL));
+  });
