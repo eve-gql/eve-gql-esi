@@ -49,6 +49,7 @@
     "glob": "^11.0.3",
     "handlebars": "^4.7.8",
     "jest": "^30.0.5",
+    "lodash.camelcase": "^4.3.0",
     "lodash.kebabcase": "^4.1.1",
     "lodash.startcase": "^4.4.0",
     "lodash.upperfirst": "^4.3.1",
