@@ -18,4 +18,4 @@ const entityTemplate = `export class {{name}} {
 };
 `;
 
-export default (data: EntityTemplateFields) => Handlebars.compile(entityTemplate)(data);
+export default Handlebars.compile<EntityTemplateFields>(entityTemplate);
