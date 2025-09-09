@@ -4,6 +4,13 @@ import startCase from 'lodash.startcase';
 import camelCase from 'lodash.camelcase';
 import kebabCase from 'lodash.kebabcase';
 
+export const fieldTypeToGraphqlType = {
+  boolean: 'Boolean',
+  number: 'Number',
+  'number[]': '[Number]',
+  string: 'String',
+};
+
 export type NormalizedName = {
   startCase: string;
   camelCase: string;
@@ -25,6 +32,13 @@ export type NormalizedEsiResponseField = {
   required: boolean;
 };
 
+export type NormalizedField = {
+  name: string;
+  type: string;
+  graphqlType: string;
+  required: boolean;
+};
+
 export interface NormalizedGeneratorConfig {
   key: 'number' | 'string';
   name: {
@@ -34,6 +48,7 @@ export interface NormalizedGeneratorConfig {
   singular: NormalizedSingularConfig;
   plural: NormalizedPluralConfig;
   esiResponse: Record<string, NormalizedEsiResponseField>;
+  fields: NormalizedField[];
   generators: GeneratorFunction[];
 }
 
@@ -61,6 +76,30 @@ export const normalize = (config: GeneratorConfig): NormalizedGeneratorConfig =>
     camelCase: camelCase(pluralStartCase),
     kebabCase: kebabCase(pluralStartCase),
   };
+
+  var normalizedEsiResponse = Object.keys(config.esiResponse).reduce(
+    (a, c) => {
+      a[c] = {
+        type:
+          typeof config.esiResponse[c] === 'string'
+            ? (config.esiResponse[c] as EsiResponseFieldType)
+            : (config.esiResponse[c] as NormalizedEsiResponseField).type,
+        required:
+          typeof config.esiResponse[c] === 'string'
+            ? true
+            : (config.esiResponse[c] as NormalizedEsiResponseField).required,
+      };
+      return a;
+    },
+    {} as Record<string, NormalizedEsiResponseField>
+  );
+
+  const fields = Object.keys(normalizedEsiResponse).map((field) => ({
+    name: field,
+    type: normalizedEsiResponse[field].type,
+    graphqlType: fieldTypeToGraphqlType[normalizedEsiResponse[field].type],
+    required: normalizedEsiResponse[field].required,
+  }));
 
   return {
     key: config.key || 'number',
@@ -102,22 +141,8 @@ export const normalize = (config: GeneratorConfig): NormalizedGeneratorConfig =>
             }))
           : [],
     },
-    esiResponse: Object.keys(config.esiResponse).reduce(
-      (a, c) => {
-        a[c] = {
-          type:
-            typeof config.esiResponse[c] === 'string'
-              ? (config.esiResponse[c] as EsiResponseFieldType)
-              : (config.esiResponse[c] as NormalizedEsiResponseField).type,
-          required:
-            typeof config.esiResponse[c] === 'string'
-              ? true
-              : (config.esiResponse[c] as NormalizedEsiResponseField).required,
-        };
-        return a;
-      },
-      {} as Record<string, NormalizedEsiResponseField>
-    ),
+    esiResponse: normalizedEsiResponse,
+    fields,
     generators: config.generators,
   };
 };

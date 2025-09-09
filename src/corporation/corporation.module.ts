@@ -7,8 +7,8 @@ import { CorporationLoader } from './corporation.loader';
 import { CorporationFieldResolver } from './corporation.field.resolver';
 import { EsiModule } from 'src/esi/esi.module';
 import { AllianceModule } from 'src/alliance/alliance.module';
-import { AllianceCreatorCorporationResolver } from './alliance.creatorcorporation.resolver';
-import { AllianceExecutorCorporationResolver } from './alliance.executorcorporation.resolver';
+import { AllianceCreatorCorporationResolver } from './alliance.creator-corporation.resolver';
+import { AllianceExecutorCorporationResolver } from './alliance.executor-corporation.resolver';
 
 @Module({
   imports: [EsiModule, AllianceModule],

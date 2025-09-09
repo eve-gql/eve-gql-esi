@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import { glob } from 'glob';
 import * as os from 'os';
 import { GeneratorConfig } from './generator-config';
-import { normalize, NormalizedGeneratorConfig } from './normalized-generator-config';
+import { normalize } from './normalized-generator-config';
 
 fs.rmSync(`${process.cwd()}/.gitignore`, { force: true });
 
