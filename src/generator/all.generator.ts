@@ -1,4 +1,4 @@
-import { generateEntity } from './entity.generator';
+import { generateEntity } from './entity/entity.generator';
 import { generateFieldResolver } from './field.resolver.generator';
 import { generateLoader } from './loader.generator';
 import { generateResolver } from './resolver.generator';
