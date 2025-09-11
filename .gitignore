@@ -23,6 +23,12 @@ lerna-debug.log*
 .temp
 .tmp
 
+# Terraform
+.terraform
+.terraform.lock.hcl
+.terraformrc
+terraform.rc
+
 # Generated
 schema.gql
 src/alliance/alliance.entity.ts
