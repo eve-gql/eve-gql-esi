@@ -71,8 +71,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4.0.2
         with:
           audience: sts.amazonaws.com
-          aws-region: ${{secrets.AWS_REGION}}
-          role-to-assume: ${{secrets.ROLE_TO_ASSUME}} #change to reflect IAM role’s ARN
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::384843744163:role/GitHub
 
       # Runs a set of terraform commands using the runners shell
       - name: Terraform Init
