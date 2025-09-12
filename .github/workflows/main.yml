@@ -91,7 +91,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
-          path: ./terraform/${GITHUB_SHA}.tfplan
+          path: ./terraform/{{ github.sha }}.tfplan
           overwrite: true
           retention-days: 1
   apply:
@@ -116,7 +116,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: terraform-plan
-          path: ./terraform/${GITHUB_SHA}.tfplan
+          path: ./terraform/{{ github.sha }}.tfplan
 
       - name: Terraform Apply
         working-directory: ./terraform
