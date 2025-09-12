@@ -19,7 +19,7 @@ In order to make calls into this API you must be authenticated through EVE Onlin
 
 First get an access code:
 
-https://login.eveonline.com/v2/oauth/authorize?response_type=code&client_id=f48027bf273c46e49cb417b201115e04&redirect_uri=http://localhost:3000/callback&scope=publicData
+https://login.eveonline.com/v2/oauth/authorize?response_type=code&client_id=f48027bf273c46e49cb417b201115e04&redirect_uri=http://localhost:3000/callback&scope=publicData&state=123
 
 After authenticating this will produce a URL with a `code` query parmeter.
 
