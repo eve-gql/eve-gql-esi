@@ -72,8 +72,8 @@ jobs:
           aws-region: us-east-2
           role-to-assume: arn:aws:iam::384843744163:role/GitHub
 
-      # Runs a set of terraform commands using the runners shell
       - name: Terraform Init
+        working-directory: ./terraform
         run: terraform init
 
       - name: Terraform Validate
