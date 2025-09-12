@@ -37,6 +37,8 @@ jobs:
         with:
           images: ${{ steps.login-ecr.outputs.registry }}/eve-gql-esi
           tags: |
+            type=raw,value=latest
+            type=raw,value=main
             type=sha
             type=sha,format=long
       - name: Build and push Docker image
