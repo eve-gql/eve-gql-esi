@@ -54,7 +54,7 @@ jobs:
   #         labels: ${{ steps.meta.outputs.labels }}
   plan:
     # The type of runner that the job will run on
-    name: Terraform plan
+    name: Terraform Plan
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -85,4 +85,41 @@ jobs:
 
       - name: Terraform Plan
         working-directory: ./terraform
-        run: terraform plan
+        run: terraform plan -out=tfplan
+
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v4
+        working-directory: ./terraform
+        with:
+          name: tfplan
+          path: tfplan
+  apply:
+    name: Terraform Apply
+    needs: plan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials for github actions
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::384843744163:role/GitHub
+
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
+
+      - name: Download Terraform Plan Artifact
+        uses: actions/download-artifact@v3
+        working-directory: ./terraform
+        with:
+          name: terraform-plan
+          path: tfplan
+
+      - name: Terraform Apply
+        working-directory: ./terraform
+        run: |
+          terraform init
+          terraform apply -auto-approve ./tfplan
