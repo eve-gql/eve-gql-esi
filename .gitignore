@@ -61,3 +61,9 @@ src/group/group.loader.ts
 src/group/group.resolver.ts
 src/group/group.service.ts
 src/group/group.type.ts
+src/type/type.entity.ts
+src/type/type.field.resolver.ts
+src/type/type.loader.ts
+src/type/type.resolver.ts
+src/type/type.service.ts
+src/type/type.type.ts
