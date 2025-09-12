@@ -85,13 +85,15 @@ jobs:
 
       - name: Terraform Plan
         working-directory: ./terraform
-        run: terraform plan -out=tfplan
+        run: terraform plan -out=${GITHUB_SHA}.tfplan
 
       - name: Upload Terraform Plan Artifact
         uses: actions/upload-artifact@v4
         with:
           name: tfplan
-          path: ./terraform/tfplan
+          path: ./terraform/${GITHUB_SHA}.tfplan
+          overwrite: true
+          retention-days: 1
   apply:
     name: Terraform Apply
     needs: plan
@@ -111,13 +113,13 @@ jobs:
         run: terraform init
 
       - name: Download Terraform Plan Artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: terraform-plan
-          path: ./terraform/tfplan
+          path: ./terraform/${GITHUB_SHA}.tfplan
 
       - name: Terraform Apply
         working-directory: ./terraform
         run: |
           terraform init
-          terraform apply -auto-approve ./tfplan
+          terraform apply -auto-approve ./${GITHUB_SHA}.tfplan
