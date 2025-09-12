@@ -88,7 +88,7 @@ jobs:
         run: terraform plan -out=terraform.tfplan
 
       - name: Upload Terraform Plan Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ github.sha }}.tfplan
           path: ./terraform/terraform.tfplan
@@ -116,10 +116,10 @@ jobs:
         run: terraform init
 
       - name: Download Terraform Plan Artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: ${{ github.sha }}.tfplan
-          path: ./terraform/terraform.tfplan
+          path: ./terraform
 
       - name: Terraform Apply
         working-directory: ./terraform
