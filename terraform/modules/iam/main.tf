@@ -1,6 +1,6 @@
 # ECS Execution Role (used by ECS itself to run your tasks)
 resource "aws_iam_role" "ecs_execution" {
-  name = "${var.name_prefix}-ecs-execution-role"
+  name = "${var.name_prefix}-execution-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -12,10 +12,6 @@ resource "aws_iam_role" "ecs_execution" {
       }
     }]
   })
-
-  tags = {
-    Name = "${var.name_prefix}-ecs-execution-role"
-  }
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_execution_policy" {
@@ -38,7 +34,7 @@ resource "aws_iam_role_policy_attachment" "ssm_policy" {
 
 # ECS Task Role (used by the app itself to access AWS resources)
 resource "aws_iam_role" "ecs_task_role" {
-  name = "${var.name_prefix}-ecs-task-role"
+  name = "${var.name_prefix}-task-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -50,10 +46,6 @@ resource "aws_iam_role" "ecs_task_role" {
       }
     }]
   })
-
-  tags = {
-    Name = "${var.name_prefix}-ecs-task-role"
-  }
 }
 
 # Custom policies for task and execution roles

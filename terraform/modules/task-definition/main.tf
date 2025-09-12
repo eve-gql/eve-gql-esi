@@ -1,3 +1,7 @@
+resource "aws_cloudwatch_log_group" "yada" {
+  name = "/ecs/${var.family}"
+}
+
 resource "aws_ecs_task_definition" "this" {
   family                   = var.family
   requires_compatibilities = ["FARGATE"]
