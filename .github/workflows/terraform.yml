@@ -1,0 +1,84 @@
+name: Terraform
+
+on:
+  workflow_run:
+    workflows: ['Docker']
+    branches: [main]
+    types:
+      - completed
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  plan:
+    name: Terraform Plan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Hashicorp - Terraform setup
+        uses: hashicorp/setup-terraform@v3.1.2
+
+      - name: Configure AWS Credentials for github actions
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::384843744163:role/GitHub
+
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
+
+      - name: Terraform Validate
+        working-directory: ./terraform
+        run: |
+          terraform fmt -recursive
+          terraform validate
+        continue-on-error: false
+
+      - name: Terraform Plan
+        working-directory: ./terraform
+        run: terraform plan -out=terraform.tfplan
+
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.sha }}.tfplan
+          path: ./terraform/terraform.tfplan
+          overwrite: true
+          retention-days: 1
+  apply:
+    name: Terraform Apply
+    needs: plan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Hashicorp - Terraform setup
+        uses: hashicorp/setup-terraform@v3.1.2
+
+      - name: Configure AWS Credentials for github actions
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-region: us-east-2
+          role-to-assume: arn:aws:iam::384843744163:role/GitHub
+
+      - name: Terraform Init
+        working-directory: ./terraform
+        run: terraform init
+
+      - name: Download Terraform Plan Artifact
+        uses: actions/download-artifact@v5
+        with:
+          name: ${{ github.sha }}.tfplan
+          path: ./terraform
+
+      - name: Terraform Apply
+        working-directory: ./terraform
+        run: |
+          terraform init
+          terraform apply -auto-approve terraform.tfplan
