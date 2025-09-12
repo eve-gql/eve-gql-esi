@@ -89,10 +89,9 @@ jobs:
 
       - name: Upload Terraform Plan Artifact
         uses: actions/upload-artifact@v4
-        working-directory: ./terraform
         with:
           name: tfplan
-          path: tfplan
+          path: ./terraform/tfplan
   apply:
     name: Terraform Apply
     needs: plan
