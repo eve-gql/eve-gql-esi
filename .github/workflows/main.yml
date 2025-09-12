@@ -112,10 +112,9 @@ jobs:
 
       - name: Download Terraform Plan Artifact
         uses: actions/download-artifact@v3
-        working-directory: ./terraform
         with:
           name: terraform-plan
-          path: tfplan
+          path: ./terraform/tfplan
 
       - name: Terraform Apply
         working-directory: ./terraform
